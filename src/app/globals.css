@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-[#060b1f] text-slate-100 antialiased;
+}
+
+::selection {
+  @apply text-slate-50;
+  background-color: rgba(34, 211, 238, 0.3);
+}
+
+.bg-grid {
+  background-image: radial-gradient(circle at 1px 1px, rgba(99, 116, 153, 0.2) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+
+.container-page {
+  @apply mx-auto flex max-w-6xl flex-col gap-24 px-4 pb-24 pt-8 sm:px-6 lg:px-8 lg:pt-12;
+}
+
+.section-shell {
+  @apply scroll-mt-28;
+}
+
+.section-label {
+  @apply mb-2 inline-flex items-center gap-2 text-sm font-medium uppercase tracking-[0.16em] text-slate-300;
+}
+
+.section-label::before {
+  content: "";
+  @apply h-px w-6 rounded-full;
+  background: linear-gradient(
+    to right,
+    rgba(99, 102, 241, 0.2),
+    rgba(125, 211, 252, 0.7),
+    transparent
+  );
+}
+
+.section-title {
+  @apply text-xl font-semibold tracking-[0.14em] text-slate-50 uppercase;
+}
+
+.card {
+  @apply relative overflow-hidden rounded-2xl border p-7 shadow-[0_24px_90px_rgba(4,10,30,0.95)] backdrop-blur-xl;
+  border-color: rgba(48, 66, 112, 0.8);
+  background-color: rgba(13, 24, 55, 0.72);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background:
+    radial-gradient(circle at 0 0, rgba(35, 142, 255, 0.2) 0, transparent 55%),
+    radial-gradient(circle at 100% 100%, rgba(91, 112, 255, 0.2) 0, transparent 62%);
+  opacity: 0.85;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+.card-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.primary-pill {
+  @apply inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm font-medium text-cyan-200 shadow-[0_10px_42px_rgba(8,25,70,0.9)];
+  border-color: rgba(103, 232, 249, 0.45);
+  background-color: rgba(15, 29, 67, 0.85);
+}
+
+.primary-button {
+  @apply inline-flex items-center justify-center rounded-full bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 px-5 py-2.5 text-base font-medium text-slate-950 shadow-[0_18px_60px_rgba(30,144,255,0.58)] transition hover:-translate-y-0.5 hover:shadow-[0_24px_72px_rgba(69,160,255,0.84)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950;
+}
+
+.secondary-button {
+  @apply inline-flex items-center justify-center rounded-full border px-4 py-2.5 text-base font-medium text-slate-100 shadow-[0_10px_38px_rgba(4,10,30,0.9)] transition hover:-translate-y-0.5 hover:border-sky-300 hover:text-cyan-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950;
+  border-color: rgba(58, 77, 129, 0.85);
+  background-color: rgba(15, 27, 63, 0.88);
+}
+
+.nav-link {
+  @apply text-sm font-medium uppercase tracking-[0.16em] text-slate-300 transition hover:text-cyan-100;
+}
+
+.pill-link {
+  @apply inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium text-slate-100 shadow-[0_12px_44px_rgba(4,10,30,0.9)] transition hover:border-sky-300 hover:text-cyan-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950;
+  border-color: rgba(58, 77, 129, 0.85);
+  background-color: rgba(15, 27, 63, 0.88);
+}
+
+.portfolio-card {
+  @apply relative flex flex-col gap-4 rounded-2xl border p-6 shadow-[0_18px_78px_rgba(4,10,30,0.95)] transition hover:-translate-y-1 hover:border-sky-300 hover:shadow-[0_30px_96px_rgba(20,54,120,0.88)];
+  border-color: rgba(48, 66, 112, 0.8);
+  background-color: rgba(13, 24, 55, 0.72);
+}
+
+.portfolio-meta {
+  @apply text-sm font-medium uppercase tracking-[0.12em] text-slate-300;
+}
+
+.portfolio-stack {
+  @apply text-sm text-slate-200;
+}
+
