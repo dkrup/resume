@@ -1,28 +1,53 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+const siteUrl = "https://denis-krupchenko.vercel.app";
+const siteName = "Denis Krupchenko — Senior Automation QA Engineer";
+const description =
+  "Senior Automation QA Engineer. Playwright Architect | AI-Driven QA | CI/CD Automation. UI + API frameworks, mentoring, scalable test systems.";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://example.com"),
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "Denis Krupchenko — Senior Automation QA Engineer",
-    template: "%s | Denis Krupchenko"
+    default: siteName,
+    template: "%s — Denis Krupchenko"
   },
-  description:
-    "Senior Automation QA Engineer specializing in Playwright, AI-driven QA, and CI/CD test architectures for modern web applications.",
+  description,
+  applicationName: siteName,
+  alternates: {
+    canonical: "/"
+  },
   openGraph: {
-    title: "Denis Krupchenko — Senior Automation QA Engineer",
-    description:
-      "I build scalable test architectures and AI-powered QA systems for modern web applications.",
-    url: "https://example.com",
-    siteName: "Denis Krupchenko — Automation QA",
-    locale: "en_US",
-    type: "website"
+    type: "website",
+    url: siteUrl,
+    title: siteName,
+    description,
+    siteName,
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: siteName
+      }
+    ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Denis Krupchenko — Senior Automation QA Engineer",
-    description:
-      "I build scalable test architectures and AI-powered QA systems for modern web applications."
+    title: siteName,
+    description,
+    images: ["/og.png"]
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1
+    }
   },
   icons: {
     icon: "/icon.svg"

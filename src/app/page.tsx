@@ -3,7 +3,6 @@ import Link from "next/link";
 import BackgroundMusic from "@/components/BackgroundMusic";
 
 const NAV_ITEMS = [
-  { href: "#about", label: "About" },
   { href: "#experience", label: "Experience" },
   { href: "#expertise", label: "Core Expertise" },
   { href: "#portfolio", label: "Portfolio" },
@@ -92,6 +91,14 @@ export default function HomePage() {
                 >
                   LinkedIn
                 </Link>
+                <Link
+                  href="https://www.youtube.com/@qa-engineer/playlists"
+                  className="secondary-button"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  YouTube
+                </Link>
               </div>
             </div>
 
@@ -127,47 +134,6 @@ export default function HomePage() {
                   </li>
                 </ul>
               </div>
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="about"
-          aria-labelledby="about-heading"
-          className="section-shell grid gap-6 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] md:items-start"
-        >
-          <div className="card">
-            <div className="card-inner space-y-4">
-              <p className="section-label">About</p>
-              <h2 id="about-heading" className="section-title">
-                About Denis
-              </h2>
-              <p className="max-w-2xl text-base leading-8 text-slate-100">
-                10+ years building UI and API test frameworks across web and enterprise systems.
-              </p>
-              <p className="max-w-2xl text-base leading-8 text-slate-100">
-                Focused on Playwright architecture, AI-assisted QA, and CI/CD quality gates.
-              </p>
-            </div>
-          </div>
-
-          <div className="card">
-            <div className="card-inner space-y-4">
-              <p className="text-sm font-medium uppercase tracking-[0.18em] text-slate-300">Quick Signal</p>
-              <ul className="space-y-3 text-base leading-7 text-slate-100">
-                <li className="flex items-start gap-2">
-                  <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />
-                  <span>Built test frameworks from scratch in multiple product domains.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-400" />
-                  <span>Drives test strategy with engineering-first quality practices.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-400" />
-                  <span>Mentors teams on automation design, reviews, and delivery quality.</span>
-                </li>
-              </ul>
             </div>
           </div>
         </section>
