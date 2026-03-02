@@ -4,16 +4,69 @@ import { useEffect, useRef, useState } from "react";
 
 export default function BackgroundMusic() {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const gainNodeRef = useRef<GainNode | null>(null);
   const [isMuted, setIsMuted] = useState(true);
   const [volume, setVolume] = useState(0.1);
+  const volumeRef = useRef(0.1);
+
+  const applyOutputVolume = (nextVolume: number, muted: boolean) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const effectiveVolume = muted ? 0 : nextVolume;
+
+    if (gainNodeRef.current) {
+      gainNodeRef.current.gain.value = effectiveVolume;
+      // Keep element volume max when Web Audio gain controls loudness.
+      audio.volume = 1;
+      return;
+    }
+
+    audio.volume = effectiveVolume;
+  };
+
+  const resumeAudioContextIfNeeded = async () => {
+    const context = audioContextRef.current;
+    if (!context || context.state !== "suspended") return;
+
+    try {
+      await context.resume();
+    } catch {
+      // Ignore and retry on next interaction.
+    }
+  };
+
+  useEffect(() => {
+    volumeRef.current = volume;
+  }, [volume]);
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    audio.volume = volume;
     audio.muted = true;
     setIsMuted(true);
+    applyOutputVolume(volumeRef.current, true);
+
+    const AudioContextCtor =
+      window.AudioContext ||
+      (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+
+    if (AudioContextCtor && !audioContextRef.current) {
+      try {
+        const context = new AudioContextCtor();
+        const source = context.createMediaElementSource(audio);
+        const gain = context.createGain();
+        source.connect(gain);
+        gain.connect(context.destination);
+        audioContextRef.current = context;
+        gainNodeRef.current = gain;
+        applyOutputVolume(volumeRef.current, true);
+      } catch {
+        // Fallback to element volume if Web Audio graph is unavailable.
+      }
+    }
 
     const windowInteractionEvents: Array<keyof WindowEventMap> = [
       "pointerdown",
@@ -29,6 +82,7 @@ export default function BackgroundMusic() {
         audio.muted = true;
         setIsMuted(true);
       }
+      applyOutputVolume(volumeRef.current, true);
 
       if (!audio.paused) return;
       try {
@@ -39,10 +93,12 @@ export default function BackgroundMusic() {
     };
 
     const unlockPlaybackFromInteraction = async () => {
-      if (audio.volume === 0) return;
+      if (volumeRef.current === 0) return;
 
       audio.muted = false;
       setIsMuted(false);
+      applyOutputVolume(volumeRef.current, false);
+      await resumeAudioContextIfNeeded();
 
       if (!audio.paused) {
         removeInteractionListeners();
@@ -94,15 +150,17 @@ export default function BackgroundMusic() {
       window.removeEventListener("pageshow", retryWhenTabBecomesActive);
       document.removeEventListener("visibilitychange", retryWhenTabBecomesActive);
       audio.removeEventListener("canplay", retryWhenTabBecomesActive);
+      if (audioContextRef.current) {
+        void audioContextRef.current.close();
+        audioContextRef.current = null;
+        gainNodeRef.current = null;
+      }
     };
   }, []);
 
   useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    audio.volume = volume;
-  }, [volume]);
+    applyOutputVolume(volume, isMuted);
+  }, [volume, isMuted]);
 
   const toggleMute = async () => {
     const audio = audioRef.current;
@@ -111,9 +169,11 @@ export default function BackgroundMusic() {
     const nextMuted = !audio.muted;
     audio.muted = nextMuted;
     setIsMuted(nextMuted);
+    applyOutputVolume(volume, nextMuted);
 
     if (!nextMuted && audio.paused) {
       try {
+        await resumeAudioContextIfNeeded();
         await audio.play();
       } catch {
         // If browser blocks playback, keep control state and wait for user action.
@@ -126,10 +186,10 @@ export default function BackgroundMusic() {
     if (!audio) return;
 
     setVolume(value);
-    audio.volume = value;
     const shouldMute = value === 0;
     audio.muted = shouldMute;
     setIsMuted(shouldMute);
+    applyOutputVolume(value, shouldMute);
   };
 
   return (
