@@ -451,6 +451,41 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+
+          <Link
+            href="https://www.youtube.com/@qa-engineer/playlists"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Open QA Engineer YouTube playlists"
+            className="group block"
+          >
+            <div className="card transition group-hover:border-cyan-400/60">
+              <div className="card-inner space-y-4">
+                <p className="section-label">Playlists</p>
+                <div
+                  className="relative aspect-video w-full overflow-hidden rounded-xl border border-slate-700/80"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(rgba(18, 16, 52, 0.64), rgba(10, 10, 35, 0.72)), url('/images/youtube-bg.png')",
+                    backgroundSize: "contain",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    backgroundColor: "#22134f"
+                  }}
+                >
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(6,182,212,0.22),transparent_52%)]" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="rounded-full border border-cyan-300/70 bg-slate-950/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-200">
+                      Open YouTube Playlists
+                    </span>
+                  </div>
+                </div>
+                <p className="text-sm leading-7 text-slate-100">
+                  Click this preview window to open the QA Engineer playlists in a new tab.
+                </p>
+              </div>
+            </div>
+          </Link>
         </section>
 
         <section id="contact" aria-labelledby="contact-heading" className="section-shell space-y-5">
@@ -484,7 +519,7 @@ export default function HomePage() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  /denniskrupchenko
+                  linkedin.com/in/denniskrupchenko/
                 </Link>
               </div>
             </div>
